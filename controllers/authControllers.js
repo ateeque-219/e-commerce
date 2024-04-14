@@ -1,34 +1,36 @@
 import {user} from "../models/userModels.js"
 
+
+// for register
 const registerController = async(req,res)=>{
     try{
    const {username,password,email,address,phone} = req.body;
    if(username === ""){
-    res.send({
+     return res.send({
       error :'username is required'
     })
    }
    if(password === ""){
-    res.send({
+    return res.send({
       error :'password is required'
     })
    }
    if(email === ""){
-    res.send({
+    return res.send({
       error :'email is required'
     })
    }
    if(phone === ""){
-    res.send({
+   return res.send({
       error :'phone no is required'
     })
    }
    if(address === ""){
-    res.send({
+    return res.send({
       error :'address is required'
     })
    }
-   const existingUser = await user.findone({email});
+   const existingUser = await user.findOne({email});
    if(existingUser){
     return res.status(200).send({
        message :"allready registered",
@@ -45,8 +47,8 @@ const registerController = async(req,res)=>{
    const newUser = await user.findById(User._id).select("-password");
    if(!newUser){
      return res.status(500).send({
-        message:"user not able to register becaues something went wrong",
-        succes:false,
+        message:"user not able to register because something went wrong",
+        success:false,
      })
    }
    return res.status(201).send({
@@ -55,37 +57,75 @@ const registerController = async(req,res)=>{
     newUser,
    })
 }
-catch(error){
- res.status(500).send({
-    succes:false,
-    message:"Something went wrong while registering",
-    error,
- })
+catch (error) {
+    console.error("Error registering user:", error);
+    return res.status(500).send({
+        success: false,
+        message: "Something went wrong while registering",
+        error: error.message, 
+    });
 }
 };
 
 
-const loginController = async(req,res)=>{
+
+
+
+
+// for login
+
+ const loginController = async(req,res)=>{
     try {
         const {email,password} = req.body
         if(!email){
-            res.send({
+           return res.send({
+            success:false,
                 error:'Email should be provided'
             })
         }
         if(!password){
-            res.send({
+         return res.send({
+            success:false,
                 error:'password is required'
             })
         }
-      
-    } catch (error) {
-        res.status(500).send({
+      const foundUser = await user.findOne({email});
+      if(!foundUser){
+        return res.send({
             success:false,
-            message:"Failed to login",
-            error
+            error:'No user with the given email matches'
         })
-    }
-}
+      }
+      const isPasswordCorrect = await foundUser.isPasswordCorrect(password);
+      if (!isPasswordCorrect) {
+          return res.status(401).json({
+              success: false,
+              error: 'Incorrect password.',
+          });
+      }
+        const token = await foundUser.tokenGenerate()
+        const loggedInUser = await user.findById(foundUser._id).select("-password")
+        const options = {
+            httpOnly:true,
+            secure:true
+        }
+        res.cookie("Token", token, options);
 
-export {registerController,loginController}
+        return res.status(200).json({
+            success: true,
+            message: 'Logged in successfully.',
+            token,
+            loggedInUser,
+        });
+
+    } catch (error) {
+        console.error("Error logging in:", error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to login.',
+            error: error.message, 
+        });
+    }
+};
+
+export {loginController,registerController}

@@ -17,10 +17,6 @@ const userSchema = new Schema({
         requried:true,
         lowercase:true
     },
-    role:{
-        type:Number,
-        default:0
-    },
     phone:{
         type:String,
         required:true
@@ -28,6 +24,10 @@ const userSchema = new Schema({
     address:{
         type:String,
         required:true
+    },
+    role:{
+        type:Number,
+        default:0
     }
 },{
     timestamps:true
@@ -35,12 +35,12 @@ const userSchema = new Schema({
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password,8);
+    this.password = await bcrypt.hash(this.password,8);
     next();
 });
 
 
-userSchema.methods.passwordiscorrect = async function(password){
+userSchema.methods.isPasswordCorrect = async function(password){
    return  await bcrypt.compare(password,this.password)
 }
 
