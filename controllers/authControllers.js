@@ -68,10 +68,6 @@ catch (error) {
 };
 
 
-
-
-
-
 // for login
 
  const loginController = async(req,res)=>{
@@ -109,7 +105,7 @@ catch (error) {
             httpOnly:true,
             secure:true
         }
-        res.cookie("Token", token, options);
+        res.cookie("token", token, options);
 
         return res.status(200).json({
             success: true,
@@ -128,4 +124,9 @@ catch (error) {
     }
 };
 
-export {loginController,registerController}
+
+
+const testController = async(req,res)=>{
+    res.send("protected route")
+}
+export {loginController,registerController,testController}
