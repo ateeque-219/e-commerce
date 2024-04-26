@@ -15,14 +15,6 @@ connectDB();
 
 const app = express();
  
-// app.use(cors({
-//     origin :process.env.CORS_ORIGIN,
-//     credentials: true
-// }))
-// app.use(express.json())
-// app.use(morgan('dev'))
-// app.use(express.urlencoded)
-// app.use(cookieParser)
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,

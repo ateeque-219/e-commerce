@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Layout from './../../components/Layout/Layout.js'
 import axios from 'axios';
-import { toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import "../../styles/Authstyles.css";
 
 const Register = () => {
     const [name,setName] = useState ("");
@@ -10,16 +11,30 @@ const Register = () => {
     const[password,setPassword] = useState("");
     const[phone,setPhone] = useState("");
     const[email,setEmail] = useState("");
+    const[answer,setAnswer] = useState("");
 
-    const handleSubmit = (e)=>{
+    const navigate = useNavigate();
+
+    const handleSubmit =  async(e)=>{
        e.preventDefault();
-    toast.success("register successfully");
-
+       try {
+        const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`,{username:name,email,password,address,phone,answer});
+        console.log(res.data.message);
+        if (res && res.data.success) {
+            toast.success(res.data && res.data.message);
+            navigate("/login");
+          } else {
+            toast.error(res.data.message);
+          }
+       } catch (error) {
+        toast.error("something went wrong")
+       }
+      
     }
     return (
         <div>
             <Layout>
-                <div className='register'>
+                <div className='form-container'>
                     <form onSubmit={handleSubmit}>
                         <h1>Register Page</h1>
                     <div className="mb-3">
@@ -61,6 +76,14 @@ const Register = () => {
                              value={address}
                              onChange={(e)=>setAddress(e.target.value)}
                             id="exampleInputAddress" placeholder='address'
+                            required
+                             />
+                        </div>
+                        <div className="mb-3">
+                            <input type="text" className="form-control" 
+                             value={answer}
+                             onChange={(e)=>setAnswer(e.target.value)}
+                            id="exampleInputAddress" placeholder='what is your favourite sport'
                             required
                              />
                         </div>

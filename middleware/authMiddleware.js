@@ -4,52 +4,72 @@ import { user } from "../models/userModels.js";
 
 
 const veryfyJwt = async(req,res,next)=>{
+
     try {
-    const decodedToken = req.cookies.token || req.header("Authorization")
-    ?.replace("Bearer ","");
-     if(!token){
-        res.status(200).send({
+    const decodedToken =  req.headers.authorization;
+     if(!decodedToken){
+        return res.status(200).send({
             success:false,
-            message:"unauthorized access"
+            message:"unauthorized access",
+            error:error.message
         })
      }
-     const token = await jwt.veryfy(decodedToken,process.env.TOKEN_SECRET);
+     const token =  jwt.verify(decodedToken,process.env.TOKEN_SECRET);
      if(!token){
-        res.status(200).send({
+        return res.status(200).send({
             success:false,
-            message:"unauthorized access"
+            message:"unauthorized access",
+            error:error.message
         })
      }
-     const User = user.findById(token?._id).select("-password");
+     const User = await user.findById(token?._id).select("-password");
      if(!User){
-        res.status(200).send({
+        return res.status(200).send({
             success:false,
-            message:"unable to access by this user"
+            message:"unable to access by this user",
+            error:error.message
         })
      }
      req.User = User;
      next();
     }
      catch (error) {
+        // console.log(error)
         res.status(500).send({
             success:false,
             error:error.message
         })
+   
      }
 }
 
 
 const isAdmin = async(req,res,next)=>{
-    const role = await user.findById(req.User._id);
-    if(role !== 1){
-        return res.status(400).send({
-            message:"unauthrorized access ",
-            success:false
+    try{
+    const uuser = await user.findById(req.User._id);
+    // console.log(req.User);
+    if(uuser?.role !== 1){
+        return res.status(401).send({
+            message:`${uuser?.username}`,
+            success:false,
+            error:error.message
         })
     }
     else {
         next();
     }
 }
+catch(err){
+    console.log(err)
+    res.status(500).send({
+        message:"something went wrong admin middleware",
+        error:err.message,
+        success:false
+     
+    })
+}
+}
 
 export {veryfyJwt,isAdmin}
+
+

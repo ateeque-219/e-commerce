@@ -4,37 +4,48 @@ import {user} from "../models/userModels.js"
 // for register
 const registerController = async(req,res)=>{
     try{
-   const {username,password,email,address,phone} = req.body;
+   const {username,password,email,address,phone,answer} = req.body;
    if(username === ""){
      return res.send({
-      error :'username is required'
+      success:false,
+      message :'username is required'
     })
    }
    if(password === ""){
     return res.send({
-      error :'password is required'
+      success:false,
+      message :'password is required'
     })
    }
    if(email === ""){
     return res.send({
-      error :'email is required'
+      success:false,
+      message :'email is required'
     })
    }
    if(phone === ""){
    return res.send({
-      error :'phone no is required'
+    success:false,
+      message :'phone no is required'
     })
    }
    if(address === ""){
     return res.send({
+      success:false,
       error :'address is required'
+    })
+   }
+   if(answer === ""){
+    return res.send({
+      success:false,
+      error :'answer is required'
     })
    }
    const existingUser = await user.findOne({email});
    if(existingUser){
     return res.status(200).send({
        message :"allready registered",
-       success:true,
+       success:false,
     })
    }
    const User = await user.create({
@@ -43,6 +54,7 @@ const registerController = async(req,res)=>{
     email,
     address,
     phone,
+    answer
    })
    const newUser = await user.findById(User._id).select("-password");
    if(!newUser){
@@ -100,7 +112,7 @@ catch (error) {
           });
       }
         const token = await foundUser.tokenGenerate()
-        const loggedInUser = await user.findById(foundUser._id).select("-password")
+        const loggedInUser = await user.findById(foundUser._id).select("-password ")
         const options = {
             httpOnly:true,
             secure:true
@@ -124,9 +136,47 @@ catch (error) {
     }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+      const { email, answer, newPassword } = req.body;
+      if (!email || !answer || !newPassword) {
+          return res.status(400).json({
+              success: false,
+              message: "Email, answer, and new password are required.",
+          });
+      }
 
+      const existingUser = await user.findOne({ email, answer });
+      if (!existingUser) {
+          return res.status(404).json({
+              success: false,
+              message: "User not found or incorrect answer.",
+          });
+      }
+
+      // Update the password
+      existingUser.password = newPassword;
+      await existingUser.save({validateBeforeSave:false});
+
+      return res.status(200).json({
+          success: true,
+          message: "Password updated successfully.",
+      });
+  } catch (error) {
+      console.error("Error resetting password:", error);
+      return res.status(500).json({
+          success: false,
+          message: "Failed to reset password.",
+          error: error.message,
+      });
+  }
+};
 
 const testController = async(req,res)=>{
     res.send("protected route")
 }
-export {loginController,registerController,testController}
+export {loginController,registerController,testController,forgotPassword}
+
+
+
+
