@@ -4,9 +4,10 @@ import { user } from "../models/userModels.js";
 
 
 const veryfyJwt = async(req,res,next)=>{
-
+   
     try {
-    const decodedToken =  req.headers.authorization;
+    const decodedToken =  req.headers.authorization ;
+    console.log(decodedToken);
      if(!decodedToken){
         return res.status(200).send({
             success:false,
@@ -31,6 +32,7 @@ const veryfyJwt = async(req,res,next)=>{
         })
      }
      req.User = User;
+    //  console.log(User);
      next();
     }
      catch (error) {
@@ -47,7 +49,7 @@ const veryfyJwt = async(req,res,next)=>{
 const isAdmin = async(req,res,next)=>{
     try{
     const uuser = await user.findById(req.User._id);
-    // console.log(req.User);
+    //  console.log(req.User);
     if(uuser?.role !== 1){
         return res.status(401).send({
             message:`${uuser?.username}`,
