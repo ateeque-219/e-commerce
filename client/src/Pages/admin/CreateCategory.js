@@ -79,7 +79,7 @@ const CreateCategory = () => {
   };
 
   useEffect(() => {
-    getAllCategory(); // Fetch categories on component mount
+    getAllCategory(); 
   }, []);
 
   return (
