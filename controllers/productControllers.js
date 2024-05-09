@@ -4,90 +4,90 @@ import slugify from "slugify";
 import Category from "../models/categoryModels.js";
 
 const CreateProductController = async (req, res) => {
-  try {
-    const { name, description, price, category, quantity, shipping } = req.fields;
-    const { photo } = req.files;
-
-    if (!name) {
-      return res.status(401).send({
+    try {
+      const { name, description, price, category, quantity, shipping } = req.fields;
+      const { photo } = req.files;
+  
+      if (!name) {
+        return res.status(401).send({
+          success: false,
+          message: "Name should be provided"
+        });
+      }
+  
+      if (!description) {
+        return res.status(401).send({
+          success: false,
+          message: "Description should be provided"
+        });
+      }
+  
+      if (!price) {
+        return res.status(401).send({
+          success: false,
+          message: "Price should be provided"
+        });
+      }
+  
+      if (!category) {
+        return res.status(401).send({
+          success: false,
+          message: "Category should be provided"
+        });
+      }
+  
+      if (!quantity) {
+        return res.status(401).send({
+          success: false,
+          message: "Quantity should be provided"
+        });
+      }
+  
+      if (photo && photo.size > 1000000) {
+        return res.status(401).send({
+          success: false,
+          message: "Photo should be less than 1 MB"
+        });
+      }
+  
+      const existingCategory = await Category.findOne({ name: category });
+      if (!existingCategory) {
+        return res.status(404).json({
+          success: false,
+          message: "Category not found"
+        });
+      }
+      const newProduct = new Product({
+        name,
+        description,
+        price,
+        category:existingCategory._id,
+        quantity,
+        shipping,
+        slug: slugify(name)
+      });
+  
+      if (photo) {
+        newProduct.photo.data = fs.readFileSync(photo.path);
+        newProduct.photo.contentType = photo.type;
+      }
+  
+      await newProduct.save();
+  
+      res.status(200).send({
+        success: true,
+        message: "Product created successfully",
+        product: newProduct
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({
         success: false,
-        message: "Name should be provided"
+        error: error.message,
+        message: "Cannot create product"
       });
     }
-
-    if (!description) {
-      return res.status(401).send({
-        success: false,
-        message: "Description should be provided"
-      });
-    }
-
-    if (!price) {
-      return res.status(401).send({
-        success: false,
-        message: "Price should be provided"
-      });
-    }
-
-    if (!category) {
-      return res.status(401).send({
-        success: false,
-        message: "Category should be provided"
-      });
-    }
-
-    if (!quantity) {
-      return res.status(401).send({
-        success: false,
-        message: "Quantity should be provided"
-      });
-    }
-
-    if (photo && photo.size > 1000000) {
-      return res.status(401).send({
-        success: false,
-        message: "Photo should be less than 1 MB"
-      });
-    }
-
-    const existingCategory = await Category.findOne({ name: category });
-    if (!existingCategory) {
-      return res.status(404).json({
-        success: false,
-        message: "Category not found"
-      });
-    }
-    const newProduct = new Product({
-      name,
-      description,
-      price,
-      category:existingCategory._id,
-      quantity,
-      shipping,
-      slug: slugify(name)
-    });
-
-    if (photo) {
-      newProduct.photo.data = fs.readFileSync(photo.path);
-      newProduct.photo.contentType = photo.type;
-    }
-
-    await newProduct.save();
-
-    res.status(200).send({
-      success: true,
-      message: "Product created successfully",
-      product: newProduct
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({
-      success: false,
-      error: error.message,
-      message: "Cannot create product"
-    });
-  }
-};
+  };
 
 const updateProductController = async(req,res) =>{
     try {
@@ -136,13 +136,6 @@ const updateProductController = async(req,res) =>{
           });
         }
     
-        const existingCategory = await Category.findOne({ name: category });
-        if (!existingCategory) {
-          return res.status(404).json({
-            success: false,
-            message: "Category not found"
-          });
-        }
         const newProduct = await Product.findByIdAndUpdate(req.params.pid , {...req.fields , sulg:slugify(name)},{new:true});
     
         if (photo) {
