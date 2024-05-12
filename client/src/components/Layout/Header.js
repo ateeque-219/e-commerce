@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { useAuth } from '../../context/auth'
+import { useAuth } from '../../context/auth.js'
 import toast from 'react-hot-toast';
+import Searchinput from './Form/Searchinput.js';
 
 const Header = () => {
 
@@ -26,7 +27,9 @@ const Header = () => {
                         <Link to='/' className="navbar-brand" >
                             🛍️  shopNest
                         </Link>
+                        
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <Searchinput/>
                             <li className="nav-item">
                                 <NavLink to='/' className="nav-link "  >Home</NavLink>
                             </li>

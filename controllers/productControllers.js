@@ -261,7 +261,7 @@ const deleteProductController = async(req,res) =>{
 
   const productCountController = async (req, res) => {
     try {
-      const total = await productModel.find({}).estimatedDocumentCount();
+      const total = await Product.find({}).estimatedDocumentCount();
       res.status(200).send({
         success: true,
         total,
@@ -270,16 +270,18 @@ const deleteProductController = async(req,res) =>{
       console.log(error);
       res.status(400).send({
         message: "Error in product count",
-        error,
+        error:error.message,
         success: false,
       });
     }
   };
+
+
    const productListController = async (req, res) => {
     try {
-      const perPage = 2;
+      const perPage = 3;
       const page = req.params.page ? req.params.page : 1;
-      const products = await productModel
+      const products = await Product
         .find({})
         .select("-photo")
         .skip((page - 1) * perPage)
@@ -298,4 +300,28 @@ const deleteProductController = async(req,res) =>{
       });
     }
   };
-export { CreateProductController , getProductController ,deleteProductController, getSingleProductController,productPhotoController , updateProductController , filterProductController , productCountController, productListController };
+
+
+  const searchProductController = async(req,res) =>{
+    try {
+        const { keyword } = req.params;
+        const resutls = await Product
+          .find({
+            $or: [
+              { name: { $regex: keyword, $options: "i" } },
+              { description: { $regex: keyword, $options: "i" } },
+            ],
+          })
+          .select("-photo");
+        res.json(resutls);
+      } catch (error) {
+        console.log(error);
+        res.status(400).send({
+          success: false,
+          message: "Error In Search Product API",
+          error,
+        });
+      }
+  }
+
+export { CreateProductController , getProductController ,searchProductController,deleteProductController, getSingleProductController,productPhotoController , updateProductController , filterProductController , productCountController, productListController };

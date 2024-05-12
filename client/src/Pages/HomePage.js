@@ -12,6 +12,9 @@ const HomePage = () => {
   const [product, setProduct] = useState([]);
   const [checked,setChecked] = useState([]);
   const [radio,setRadio] = useState([]);
+  const [total,setTotal] = useState(0);
+  const [loading ,setLoading] = useState(false);
+  const [page,setPage] = useState(1);
 
   const handleFilter = (value,id)=>{
      let fil = [...checked];
@@ -26,23 +29,55 @@ const HomePage = () => {
 
 
 
- 
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
+  const loadMore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
+      setLoading(false);
+      setProduct([...product, ...data?.products]);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
 
   const getAllProduct = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product`);
+      setLoading(true);
+      const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
       if (res.data?.success) {
-        setProduct(res.data?.products)
+        
+        setLoading(false);
+        setProduct([...product, ...res.data?.products]);
       }
       else {
         toast.error(res.data.message);
       }
     } catch (error) {
+      setLoading(false);
       toast.error("something went wrong while getting all the product");
     }
   }
  
+
+  const getTotal = async()=>{
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-count`);
+      if(res.data.success){
+        setTotal(res.data.total);
+      }
+      else {
+        console.log(res.data.total)
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   const getAllCategory = async () => {
     try {
@@ -75,6 +110,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllCategory(); 
+    getTotal()
   }, []);
 
   useEffect(() => {
@@ -137,6 +173,19 @@ const HomePage = () => {
 
               ))}
             </div>
+            <div className="m-2 p-3">
+            {product && product.length < total && (
+              <button
+                className="btn btn-warning"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(page + 1);
+                }}
+              >
+                {loading ? "Loading..." : "Loadmore"}
+              </button>
+            )}
+          </div>
           </div>
           
         </div>
