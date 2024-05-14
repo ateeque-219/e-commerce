@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isAdmin, veryfyJwt } from "../middleware/authMiddleware.js";
-import { CreateProductController, deleteProductController, filterProductController, getProductController, getSingleProductController, productCountController, productListController, productPhotoController, searchProductController, updateProductController } from "../controllers/productControllers.js";
+import { CreateProductController, deleteProductController, filterProductController, getProductController, getSingleProductController, productCategoryController, productCountController, productListController, productPhotoController, relatedProductController, searchProductController, updateProductController } from "../controllers/productControllers.js";
 import ExpressFormidable from "express-formidable";
 
 
@@ -16,4 +16,6 @@ router.route("/filter-products").post(filterProductController);
 router.route("/product-count").get (productCountController);
 router.route("/product-list/:page").get( productListController);
 router.route("/search-product/:keyword").get(searchProductController);
+router.route("/related-product/:pid/:cid").get(relatedProductController);
+router.route("/product-category/:slug").get(productCategoryController);
 export default router;

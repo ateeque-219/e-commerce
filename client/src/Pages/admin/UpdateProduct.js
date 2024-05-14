@@ -23,7 +23,7 @@ const UpdateProduct = () => {
   const getOneProduct = async()=>{
 //    e.preventDefault();
    try {
-     const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product/${params.slug}`);
+     const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product/${params?.slug}`);
      if(res.data.success){
         setName(res.data.product.name);
         setCategory(res.data.product.category._id);
