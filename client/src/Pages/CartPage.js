@@ -1,12 +1,80 @@
 import React from 'react'
 import Layout from './../components/Layout/Layout.js'
+import { useCart } from '../context/Cart.js'
+import { useAuth } from '../context/auth.js'
+import { useNavigate } from 'react-router-dom'
 
 const CartPage = () => {
+  const [auth,setAuth] = useAuth();
+  const [cart,setCart] = useCart();
+  const navigate = useNavigate();
+ 
+  const getTotal=()=>{
+    let total = 0;
+    cart?.map((i)=>{
+        total+=(i.price);
+    });
+    return total.toLocaleString("en-US",{
+      style:"currency",
+      currency:"USD",
+    })
+  }
+  const removeItem = (pid)=>{
+    try{
+   let tempCart = [...cart];
+   const remove = cart.findIndex(item => item._id === pid);
+   tempCart.splice(remove,1);
+   setCart(tempCart);
+   localStorage.setItem('cart',JSON.stringify(tempCart));
+   getTotal();
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
   return (
     <Layout>
         <div className='container'>
-            <div className='row'>
-            <h1 className=''>Your Cart</h1>
+            <div className='row '>
+             <div className='col-md-12 '>
+              <h1 className='text-center bg-light m-2 p-2'>
+                {`Hello ${auth?.token && auth?.user?.username}`}
+              </h1>
+              <h5 className='text-center'>
+                {
+                  cart?.length > 0  ? `You have ${cart.length} product in your cart ${auth?.token ? "":"please login first"} `:"You don't have anything in your cart"
+                }
+              </h5>
+             </div>
+            </div>
+            <div className='row '>
+              <div className='col-md-8'>
+                {
+                  cart?.map((p) =>(
+                    <div className='row flex-row card mb-2 p-2 '>
+                   <div className='col-md-8 p-2 '>
+                   <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                   width= '50px'
+                   height={"300px"}
+          
+                    className="card-img-top" alt={p.name} />
+                   </div>
+                   <div className='col-md-4 pt-5 mt-3'>
+                    <h3>{p.name}</h3>
+                    <h3>{p.description.substring(0,30)}</h3>
+                    <h3>price : {p.price}</h3>
+                    <button className='btn btn-danger' onClick={()=>removeItem(p._id)}>Remove</button>
+                   </div>
+                   </div>
+                  ))
+                }
+              </div>
+              <div className='col-md-3 text-center'>
+               <h2 >Cart Details</h2>
+               <h6>Total | Checkout | Payment</h6>
+               <hr/>
+               <h4>Total:{getTotal()}</h4>
+              </div>
             </div>
         </div>
     </Layout>

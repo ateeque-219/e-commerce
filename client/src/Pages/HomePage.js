@@ -167,7 +167,9 @@ const HomePage = () => {
                       <p >$ {p.price}</p>
       
                       <button className='btn btn-primary ms-1' onClick={()=>navigate(`/product/${p?.slug}`)}> More Detail</button>
-                      <button className='btn btn-secondary ms-1' onClick={()=>{setCart([...cart,p]) 
+                      <button className='btn btn-secondary ms-1' onClick={()=>{
+                        setCart([...cart,p]) 
+                        localStorage.setItem('cart' , JSON.stringify([...cart,p]));
                          toast.success("Product added to cart successfully")}}>Add to Cart</button>
                     </div>
                     

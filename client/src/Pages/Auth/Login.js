@@ -23,8 +23,8 @@ const Login = () => {
             toast.success(res.data && res.data.message);
             setAuth({
               ...auth,
-              user: res.data.loggedInUser,
-              token: res.data.token,
+              user: res.data?.loggedInUser,
+              token: res.data?.token,
             });
             localStorage.setItem('auth', JSON.stringify({ user: res.data.loggedInUser, token: res.data.token }));
             navigate(location.state || "/");
