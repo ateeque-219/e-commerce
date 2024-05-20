@@ -1,12 +1,12 @@
 import { Router } from "express";
-import {forgotPassword, loginController, registerController , testController} from "../controllers/authControllers.js"
+import {forgotPassword, loginController, registerController , testController, updateProfileController} from "../controllers/authControllers.js"
 import {isAdmin, veryfyJwt} from "../middleware/authMiddleware.js"
 const router = Router();
 router.route('/register').post(registerController);
 router.route('/login').post(loginController);
  router.route('/test').get(veryfyJwt,isAdmin,testController );
-
-router.route('/forgot-password').post(forgotPassword);4
+router.route('/profile').put(veryfyJwt,updateProfileController)
+router.route('/forgot-password').post(forgotPassword);
 
 router.get('/user-auth',veryfyJwt,(req,res)=>{
 console.log(req.headers.authorization)

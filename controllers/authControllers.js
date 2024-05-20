@@ -1,5 +1,5 @@
 import {user} from "../models/userModels.js"
-
+import bcrypt from 'bcrypt';
 
 // for register
 const registerController = async(req,res)=>{
@@ -171,12 +171,48 @@ const forgotPassword = async (req, res) => {
       });
   }
 };
+const updateProfileController = async (req, res) => {
+    try {
+      const userId = req.User._id; // Assuming the user ID is available in req.user after authentication
+      const { name, password, phone, address } = req.body;
+  
+      const updateData = {};
+      if (name) updateData.name = name;
+      if (password) updateData.password = await bcrypt.hash(password, 8); // Password will be hashed by the pre-save hook in the model
+      if (phone) updateData.phone = phone;
+      if (address) updateData.address = address;
+  
+      const updatedUser = await user.findByIdAndUpdate(userId, updateData, {
+        new: true,
+        runValidators: true,
+      }).select("-password");
+  
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: "Profile updated successfully",
+        updatedUser,
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update profile",
+        error: error.message,
+      });
+    }
+  };
 
 const testController = async(req,res)=>{
     res.send("protected route")
 }
-export {loginController,registerController,testController,forgotPassword}
-
+export {loginController,registerController,updateProfileController,testController,forgotPassword}
 
 
 

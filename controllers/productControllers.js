@@ -1,7 +1,21 @@
 import Product from "../models/productModel.js";
 import fs from "fs";
 import slugify from "slugify";
+import orderModel from "../models/orderModels.js"
 import Category from "../models/categoryModels.js";
+import braintree from "braintree";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
+
+
 
 const CreateProductController = async (req, res) => {
     try {
@@ -369,4 +383,53 @@ const deleteProductController = async(req,res) =>{
       });
     }
   };
-export { CreateProductController,productCategoryController ,relatedProductController, getProductController ,searchProductController,deleteProductController, getSingleProductController,productPhotoController , updateProductController , filterProductController , productCountController, productListController };
+
+
+  const braintreetokenController = async(req,res)=>{
+    try {
+      gateway.clientToken.generate({}, function (err, response) {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.send(response);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const braintreePaymentController = async(req,res)=>{
+    try {
+      const { nonce, cart } = req.body;
+      let total = 0;
+      cart.map((i) => {
+        total += i.price;
+      });
+      let newTransaction = gateway.transaction.sale(
+        {
+          amount: total,
+          paymentMethodNonce: nonce,
+          options: {
+            submitForSettlement: true,
+          },
+        },
+        function (error, result) {
+          if (result) {
+            const order = new orderModel({
+              products: cart,
+              payment: result,
+              buyer: req.User._id,
+            }).save();
+            res.json({ ok: true });
+          } else {
+            res.status(500).send(error);
+          }
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+export { CreateProductController,braintreePaymentController,productCategoryController,braintreetokenController ,relatedProductController, getProductController ,searchProductController,deleteProductController, getSingleProductController,productPhotoController , updateProductController , filterProductController , productCountController, productListController };
