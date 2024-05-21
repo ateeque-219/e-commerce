@@ -1,5 +1,6 @@
 import {user} from "../models/userModels.js"
 import bcrypt from 'bcrypt';
+import Order from "../models/orderModels.js"
 
 // for register
 const registerController = async(req,res)=>{
@@ -212,7 +213,25 @@ const updateProfileController = async (req, res) => {
 const testController = async(req,res)=>{
     res.send("protected route")
 }
-export {loginController,registerController,updateProfileController,testController,forgotPassword}
+
+const getAllOrdersController = async (req, res) => {
+    try {
+      const orders = await Order
+        .find({})
+        .populate("products", "-photo")
+        .populate("buyer", "name")
+        .sort({ createdAt: "-1" });
+      res.json(orders);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "Error WHile Geting Orders",
+        error,
+      });
+    }
+  };
+export {loginController,getAllOrdersController,registerController,updateProfileController,testController,forgotPassword}
 
 
 
