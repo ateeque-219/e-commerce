@@ -3,6 +3,7 @@ import Layout from '../../components/Layout/Layout.js'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import "../../styles/ProductDetailsStyles.css";
 
 const DetailProduct = () => {
     const params = useParams();

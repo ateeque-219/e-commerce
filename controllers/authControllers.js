@@ -220,18 +220,57 @@ const getAllOrdersController = async (req, res) => {
         .find({})
         .populate("products", "-photo")
         .populate("buyer", "name")
-        .sort({ createdAt: "-1" });
+        .sort({ createdAt: -1 }); // Ensuring the sort value is an object with key-value pairs
+      res.json(orders);
+    } catch (error) {
+      console.error("Error while getting orders:", error);
+      res.status(500).send({
+        success: false,
+        message: "Error while getting orders",
+        error: error.message,
+      });
+    }
+  };
+
+
+ const getAdminOrdersController = async (req, res) => {
+    try {
+      const orders = await Order
+        .find({})
+        .populate("products", "-photo")
+        .populate("buyer", "name")
+        .sort({ createdAt: -1 });
       res.json(orders);
     } catch (error) {
       console.log(error);
       res.status(500).send({
         success: false,
         message: "Error WHile Geting Orders",
+        error:error.message
+      });
+    }
+  };
+
+  const orderStatusController = async (req, res) => {
+    try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+      const orders = await Order.findByIdAndUpdate(
+        orderId,
+        { status },
+        { new: true }
+      );
+      res.json(orders);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "Error While Updateing Order",
         error,
       });
     }
   };
-export {loginController,getAllOrdersController,registerController,updateProfileController,testController,forgotPassword}
+export {loginController,getAdminOrdersController,orderStatusController,getAllOrdersController,registerController,updateProfileController,testController,forgotPassword}
 
 
 

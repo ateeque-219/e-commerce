@@ -6,11 +6,11 @@ import moment from 'moment'
 import axios from 'axios'
 const Order = () => {
   const [orders,setOrders] = useState([]);
-  const {auth,setAuth} = useAuth();
+  const [auth] = useAuth();
   const getOrder  = async()=>{
     try {
       const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`);
-      setOrders(res.data?.orders);
+      setOrders(res.data);
     } catch (error) {
       console.log(error)
     }
@@ -26,6 +26,7 @@ const Order = () => {
                 <div className='col-md-3'><UserMenu/></div>
                 <div className="col-md-9">
             <h1 className="text-center">All Orders</h1>
+            orders.l
             {orders?.map((o, i) => {
               return (
                 <div className="border shadow">
@@ -42,7 +43,7 @@ const Order = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{i + 1}</td>
+                        <td >{i + 1}</td>
                         <td>{o?.status}</td>
                         <td>{o?.buyer?.name}</td>
                         <td>{moment(o?.createAt).fromNow()}</td>

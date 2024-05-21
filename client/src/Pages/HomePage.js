@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Checkbox , Radio} from 'antd'
 import { useCart } from '../context/Cart.js';
+import "../styles/Homepage.css";
 
 const HomePage = () => {
   const [cart,setCart] = useCart();

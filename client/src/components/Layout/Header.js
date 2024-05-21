@@ -11,7 +11,7 @@ const Header = () => {
     const [cart,setCart] = useCart();
   const categories = useCategory();
   const [auth, setAuth] = useAuth();
-  const handlelogout = (e) => {
+  const handleLogout = (e) => {
     setAuth({
       ...auth,
       user: null,
@@ -74,7 +74,7 @@ const Header = () => {
                 </ul>
               </li>
 
-              {!auth.user ? (
+              {!auth?.user ? (
                 <>
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link">
@@ -92,11 +92,12 @@ const Header = () => {
                   <li className="nav-item dropdown">
                     <NavLink
                       className="nav-link dropdown-toggle"
+                      href="#"
                       role="button"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      style={{ border: "none" }}
                     >
-                      {auth.user?.username}
+                      {auth?.user?.username}
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>
@@ -109,11 +110,11 @@ const Header = () => {
                           Dashboard
                         </NavLink>
                       </li>
-                      <li className="dropdown-item">
+                      <li>
                         <NavLink
+                          onClick={handleLogout}
                           to="/login"
                           className="dropdown-item"
-                          onClick={handlelogout}
                         >
                           Logout
                         </NavLink>
