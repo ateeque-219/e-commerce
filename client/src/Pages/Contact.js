@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from './../components/Layout/Layout.js'
 import { BiMailSend, BiPhoneCall, BiSupport } from "react-icons/bi";
+import "../styles/Contact.css"
 const Contact = () => {
   return (
     <div>

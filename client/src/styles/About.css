@@ -1,0 +1,20 @@
+.contactus {
+    margin-top: 2rem !important; /* Add margin at the top */
+  }
+  
+  .contactus img {
+    border-radius: 8px !important; /* Add border radius to the image */
+  }
+  
+  .contactus p {
+    color: #333333 !important; /* Dark text color */
+    font-size: 1.1rem !important; /* Font size */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .contactus .col-md-4 {
+      text-align: center !important; /* Center align on smaller screens */
+    }
+  }
+  

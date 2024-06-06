@@ -1,0 +1,28 @@
+.footer {
+    background: linear-gradient(to right,  #3c4146,  #152535) !important; /* Gradient background */
+    color: #fff !important; /* Text color */
+    padding: 1rem 0 !important; /* Add padding */
+  }
+  
+  .footer h1 {
+    font-size: 1.5rem !important; /* Font size for heading */
+    margin-bottom: 1rem !important; /* Add margin bottom */
+  }
+  
+  .footer p {
+    font-size: 1rem !important; /* Font size for paragraph */
+  }
+  
+  .footer a {
+    color: #fff !important; /* Link color */
+    text-decoration: none !important; /* Remove underline */
+    transition: all 0.3s ease-in-out !important; /* Smooth transition */
+  }
+  
+  .footer a:hover {
+    color: #ffc107 !important; /* Change color on hover */
+  }
+  .abc{
+    color: white !important;
+  }
+  

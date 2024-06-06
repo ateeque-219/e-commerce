@@ -6,6 +6,7 @@ import Searchinput from "./Form/Searchinput.js";
 import useCategory from "../../hooks/useCategory.js";
 import { useCart } from "../../context/Cart.js";
 import { Badge } from "antd";
+import "../../styles/Header.css"
 
 const Header = () => {
     const [cart,setCart] = useCart();
@@ -41,8 +42,8 @@ const Header = () => {
             </Link>
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <Searchinput />
-              <li className="nav-item">
+             <Searchinput className="search-input" />
+              <li className="nav-item abc">
                 <NavLink to="/" className="nav-link ">
                   Home
                 </NavLink>

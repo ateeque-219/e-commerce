@@ -1,0 +1,47 @@
+.policy-container {
+    height: 100vh !important; /* Set container height to full viewport height */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  .policy {
+    max-width: 100% !important;
+    margin-top: 2rem;
+  }
+  
+  .policy img {
+    max-width: 100% !important;
+    border-radius: 8px !important; /* Add border radius to the image */
+  }
+  
+  .policy-content {
+    padding: 2rem !important;
+    background-color: #f8f9fa !important;
+    border-radius: 8px !important;
+  }
+  
+  .policy-content h2 {
+    font-size: 2rem !important; /* Increase font size for heading */
+    margin-bottom: 1rem !important; /* Add margin bottom */
+  }
+  
+  .policy-content p {
+    color: #333333 !important; /* Dark text color */
+    font-size: 1.1rem !important; /* Font size */
+    line-height: 1.6 !important; /* Line height */
+  }
+
+  .policy{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+
+  .policy-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }

@@ -1,0 +1,31 @@
+.contactus {
+    margin-top: 2rem !important; /* Add margin at the top */
+  }
+  
+  .contactus img {
+    border-radius: 8px !important; /* Add border radius to the image */
+  }
+  
+  .contactus h1 {
+    font-size: 2rem !important; /* Increase font size for heading */
+  }
+  
+  .contactus p {
+    color: #333333 !important; /* Dark text color */
+    font-size: 1.1rem !important; /* Font size */
+  }
+  
+  .contactus .contact-info {
+    margin-top: 1.5rem !important; /* Add margin between contact info */
+  }
+  
+  .contactus .contact-info p {
+    margin-bottom: 0.5rem !important; /* Add margin between contact info items */
+  }
+  
+  /* Icons styling */
+  .contactus svg {
+    vertical-align: middle !important; /* Align icons vertically */
+    margin-right: 0.5rem !important; /* Add margin to the right of icons */
+  }
+  

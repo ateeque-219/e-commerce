@@ -1,0 +1,94 @@
+/* Navbar styling */
+.navbar {
+    background-color: #343a40 !important; /* Dark background for the navbar */
+    padding: 1rem 2rem !important; /* Padding around the navbar */
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem !important; /* Increase font size for the brand */
+    color: #ffffff !important; /* White color for the brand text */
+    font-weight: bold !important; /* Bold font for the brand */
+  }
+  
+  .navbar-brand:hover {
+    color: #f8d210 !important; /* Change color on hover */
+  }
+  
+  .nav-link {
+    color: #ffffff !important; /* White color for nav links */
+    margin-right: 1rem !important; /* Space between links */
+    transition: color 0.3s ease !important; /* Smooth transition for hover effect */
+  }
+  
+  .nav-link:hover {
+    color: #f8d210 !important; /* Change color on hover */
+  }
+  
+  .nav-item + .nav-item {
+    margin-left: 1rem !important; /* Space between nav items */
+  }
+  
+  .dropdown-menu {
+    background-color: #343a40 !important; /* Dark background for dropdown */
+  }
+  
+  .dropdown-item {
+    color: #ffffff !important; /* White color for dropdown items */
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8d210 !important; /* Change background on hover */
+    color: #343a40 !important; /* Change text color on hover */
+  }
+  
+  .navbar-toggler {
+    border-color: #f8d210 !important; /* Border color for toggler */
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important; /* White color for toggler icon */
+  }
+  
+  .dropdown-toggle::after {
+    border-top-color: #ffffff !important; /* White color for dropdown arrow */
+  }
+  
+  .nav-item .badge {
+    background-color: #f8d210 !important; /* Badge background color */
+    color: #343a40 !important; /* Badge text color */
+  }
+  
+  .dropdown-toggle {
+    border: none !important; /* Remove border */
+  }
+  
+  /* Search input styling */
+  .search-input {
+    margin-right: 1rem !important; /* Space between search input and other elements */
+    padding: 200px !important;
+    
+  }
+  
+  .search-input input {
+    border: 1px solid #f8d210 !important; /* Border color for input */
+    border-radius: 4px !important; /* Rounded corners */
+    padding: 0.5rem 1rem !important; /* Padding inside the input */
+  }
+  .abc{
+    padding-left: 2px !important;
+  }
+  .search-input button {
+    background-color: #f8d210 !important; /* Background color for button */
+    border: 1px solid #f8d210 !important; /* Border color for button */
+    color: #343a40 !important; /* Text color for button */
+    border-radius: 4px !important; /* Rounded corners */
+    padding: 0.5rem 1rem !important; /* Padding inside the button */
+    margin-left: 0.5rem !important; /* Space between input and button */
+    transition: background-color 0.3s ease !important; /* Smooth transition for hover effect */
+  }
+  
+  .search-input button:hover {
+    background-color: #343a40 !important; /* Change background on hover */
+    color: #f8d210 !important; /* Change text color on hover */
+  }
+  
