@@ -1,0 +1,129 @@
+Container
+.cart-page-container {
+    padding: 20px !important;
+  }
+  
+  /* Header */
+  .cart-page-header {
+    margin-bottom: 20px !important;
+  }
+  
+  /* Content */
+  .cart-page-content {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+  
+  
+  .cart-items-section {
+     flex: 0 0 65% !important; 
+   
+    padding: 10px !important;
+  } 
+  
+  .cart-item {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    width: 90% !important;
+    background-color: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .cart-item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .cart-item-img {
+    flex: 0 0 30% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    width: 1000px;
+  }
+  
+  .cart-item-img img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
+  
+  .cart-item-details {
+    flex: 1 !important;
+
+
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+
+  }
+  
+  .cart-item-details h3 {
+    margin-bottom: 10px !important;
+    font-size: 20px !important;
+  }
+  
+  .cart-item-details p {
+    margin-bottom: 10px !important;
+    font-size: 16px !important;
+  }
+  
+  .cart-item-details h4 {
+    margin-bottom: 20px !important;
+    font-size: 18px !important;
+  }
+  
+  .cart-item-details .btn {
+    align-self: flex-start !important;
+  }
+  
+  /* Summary Section */
+  .cart-summary-section {
+    flex: 0 0 30% !important;
+    padding: 20px !important;
+    background-color: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    text-align: center !important;
+  }
+  
+  .cart-summary-section h2 {
+    font-size: 24px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .cart-summary-section h6 {
+    font-size: 16px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .cart-summary-section hr {
+    margin-bottom: 20px !important;
+  }
+  
+  .cart-summary-section h4 {
+    font-size: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .current-address {
+    margin-bottom: 20px !important;
+  }
+  
+  .address-update {
+    margin-bottom: 20px !important;
+  }
+  
+  .payment-section {
+    margin-top: 20px !important;
+  }
+  
+  .payment-section .btn {
+    width: 100% !important;
+  }
+  
