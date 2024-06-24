@@ -1,0 +1,165 @@
+/* Container */
+.new-order-container {
+    background-color: #f8f9fa !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    width: auto;
+  }
+  
+  /* Row */
+  .new-order-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 20px !important; /* Add some space between columns */
+  }
+  
+  /* Sidebar */
+  .new-order-sidebar {
+    flex: 0 0 25% !important;
+    padding: 20px !important;
+    background-color: #343a40 !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .new-order-sidebar a {
+    display: block !important;
+    padding: 10px 15px !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    margin-bottom: 10px !important;
+    border-radius: 4px !important;
+    background-color: #495057 !important; /* Add background color to sidebar links */
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .new-order-sidebar a:hover {
+    background-color: #6c757d !important;
+  }
+  
+  .new-order-sidebar a.active {
+    background-color: #007bff !important;
+  }
+  
+  /* Content */
+  .new-order-content {
+    flex: 1 !important;
+    padding: 20px !important;
+    background-color: #fff !important;
+    color: #343a40 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  }
+  
+  .new-order-content:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .new-order-content h1 {
+    font-size: 24px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  /* Table */
+  .new-order-table {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+    font-size: 14px !important;
+  }
+  
+  .new-order-table th,
+  .new-order-table td {
+    text-align: center !important;
+    padding: 10px !important;
+    vertical-align: middle !important;
+  }
+  
+  .new-order-table thead {
+    background-color: #343a40 !important;
+    color: #fff !important;
+  }
+  
+  .new-order-table tbody tr {
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .new-order-table tbody tr:hover {
+    background-color: #f1f1f1 !important;
+  }
+  
+  /* Product Card */
+  .new-order-product-card {
+    display: flex !important;
+    align-items: flex-start !important; /* Ensure items are aligned to the start */
+    margin-bottom: 15px !important;
+    padding: 15px !important;
+    background-color: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    width: auto !important;
+  }
+  
+  .new-order-product-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .new-order-card-img-top {
+    border-radius: 8px !important;
+    width: 500px !important; /* Adjust the image width */
+    height: 150px !important; /* Adjust the image height */
+    object-fit: cover !important; /* Ensure the image covers the area without distortion */
+    margin-right: 15px !important; /* Add some space between the image and the text */
+  }
+  
+  .new-order-product-details {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column !important;
+    margin-top: 40px !important;
+    border: 2px solid gray !important;
+    margin-left: 69px !important;
+    background-color: rgb(218, 210, 210);
+  }
+  
+  .new-order-product-details p {
+    margin: 0 !important;
+    font-size: 16px !important; /* Increase the font size */
+    line-height: 1.4 !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  }
+  
+  .new-order-product-details p.price {
+    font-weight: bold !important;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .new-order-sidebar,
+    .new-order-content {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+  
+    .new-order-product-card {
+      flex-direction: column !important;
+      align-items: center !important;
+    }
+  
+    .new-order-card-img-top {
+      margin-bottom: 10px !important;
+      margin-right: 0 !important; /* Remove the right margin for smaller screens */
+    }
+  
+    .new-order-product-details {
+      width: 100% !important;
+      text-align: center !important; /* Center text on smaller screens */
+    }
+  }
+  

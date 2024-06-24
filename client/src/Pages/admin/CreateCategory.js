@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import CategoryForm from '../../components/Layout/Form/CategoryForm.js';
 import { Modal } from "antd";
 
+
 const CreateCategory = () => {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
@@ -33,7 +34,6 @@ const CreateCategory = () => {
   const editSubmit = async (e) => {
     e.preventDefault();
     try {
-  
       const res = await axios.put(`${process.env.REACT_APP_API}/api/v1/category/update-category/${selected._id}`, { name: updatedName });
       console.log(res.data)
       if (res.data.success) {
@@ -50,22 +50,20 @@ const CreateCategory = () => {
     }
   };
 
- const handleDelete = async(xid)=>{
-  try {
-    const res = await axios.delete(`${process.env.REACT_APP_API}/api/v1/category/delete-category/${xid}`);
-    if(res.data.success){
-      toast.success(
-        "category is deleted"
-      )
-     getAllCategory();
+  const handleDelete = async(xid) => {
+    try {
+      const res = await axios.delete(`${process.env.REACT_APP_API}/api/v1/category/delete-category/${xid}`);
+      if(res.data.success){
+        toast.success("category is deleted");
+        getAllCategory();
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      toast.error("something went wrong while deleting");
     }
-    else {
-      toast.error(res.data.message)
-    }
-  } catch (error) {
-    toast.error("something went wrong while deleting")
-  }
- }
+  };
+
   const getAllCategory = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/category/get-category`);
@@ -85,42 +83,46 @@ const CreateCategory = () => {
   return (
     <div>
       <Layout>
-        <div className='container-fluid m-3 p-3'>
-          <div className='row m-10' >
-            <div className='col-md-3'><AdminMenu /></div>
-            <div className='col-md-9'>
-              <h1>Categories</h1>
-              <div className='p-3 w-50'>
-                <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />
-              </div>
-              <div className='w-75'>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Category Name</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {categories.map((x) => (
-                      <tr key={x._id}>
-                        <td>{x.name}</td>
-                        <td>
-                          <button className="btn btn-primary ms-2" onClick={() => {
-                            setOpen(true);
-                            setUpdatedName(x.name);
-                            setSelected(x);
-                          }}>Edit</button>
-                          <button className='btn btn-danger ms-2' onClick={()=>{handleDelete(x._id)}}>Delete</button>
-                        </td>
+        <div className='dashboard-container container-fluid'>
+          <div className='dashboard-row row'>
+            <div className='dashboard-sidebar col-md-3'>
+              <AdminMenu />
+            </div>
+            <div className='dashboard-content col-md-9'>
+              <div className='dashboard-details'>
+                <h1>Categories</h1>
+                <div className='p-3'>
+                  <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />
+                </div>
+                <div className='mt-3'>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Category Name</th>
+                        <th scope="col">Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {categories.map((x) => (
+                        <tr key={x._id}>
+                          <td>{x.name}</td>
+                          <td>
+                            <button className="btn btn-primary ms-2" onClick={() => {
+                              setOpen(true);
+                              setUpdatedName(x.name);
+                              setSelected(x);
+                            }}>Edit</button>
+                            <button className='btn btn-danger ms-2' onClick={() => { handleDelete(x._id) }}>Delete</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <Modal visible={open} onCancel={() => setOpen(false)} footer={null}>
+                  <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={editSubmit} />
+                </Modal>
               </div>
-              <Modal visible={open} onCancel={() => setOpen(false)} footer={null}>
-                <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={editSubmit} />
-              </Modal>
             </div>
           </div>
         </div>
