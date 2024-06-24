@@ -13,10 +13,10 @@ const AdminOrders = () => {
     "Not Process",
     "Processing",
     "Shipped",
-    "deliverd",
-    "cancel",
+    "Delivered",
+    "Cancelled",
   ]);
-  const [changeStatus, setCHangeStatus] = useState("");
+  const [changeStatus, setChangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
 
@@ -83,7 +83,7 @@ const AdminOrders = () => {
                         </Select>
                       </td>
                       <td>{o?.buyer?.name}</td>
-                      <td>{moment(o?.createAt).fromNow()}</td>
+                      <td>{moment(o?.createdAt).fromNow()}</td>
                       <td>{o?.payment.success ? "Success" : "Failed"}</td>
                       <td>{o?.products?.length}</td>
                     </tr>
@@ -91,18 +91,15 @@ const AdminOrders = () => {
                 </table>
                 <div className="container">
                   {o?.products?.map((p, i) => (
-                    <div className="row mb-2 p-3 product-card" key={p._id}>
-                      <div className="col-md-4">
-                        <img
-                          src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                          className="new-order-card-img-top"
-                          alt={p.name}
-                        />
-                      </div>
+                    <div className="new-order-product-card" key={p._id}>
+                      <img
+                        src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                        alt={p.name}
+                        className="new-order-card-img-top"
+                      />
                       <div className="new-order-product-details">
                         <p>{p.name}</p>
-                        <p>{p.description.substring(0, 30)}</p>
-                        <p className="price">Price: {p.price}</p>
+                        <p className="price">{p.price}</p>
                       </div>
                     </div>
                   ))}
